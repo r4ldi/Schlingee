@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=Game
+comment0.text=\r\n\ \r\n\ \r\n\ Autoren\:\ Florian\ Weder,\ Anujan\ Chandrawathanan,\ Jonathan\ Wiggli\ \r\n\ Version\ 1\r\n\ \r\n\r\n
+comment1.params=
+comment1.target=int\ randomPos()
+comment1.text=\r\n\ The\ method\ randomPos\ defines\ one\ of\ four\ random\ positions\ on\ the\ x-axis.\r\n
+comment2.params=
+comment2.target=void\ endGame()
+comment2.text=\r\n\ The\ method\ endGame\ shows\ the\ game\ over\ screen\ and\ stops\ the\ program.\r\n
+comment3.params=
+comment3.target=java.lang.String\ randomSoundHit()
+comment4.params=
+comment4.target=void\ act()
+comment4.text=\r\n\ The\ act\ method\ is\ executed\ at\ the\ start.\r\n
+numComments=5

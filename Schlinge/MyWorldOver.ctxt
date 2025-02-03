@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=MyWorldOver
+comment1.params=
+comment1.target=greenfoot.GreenfootSound\ getBgSound()
+comment2.params=
+comment2.target=Score\ getCurrentScore()
+comment3.params=
+comment3.target=Score\ getHighScore()
+comment4.params=
+comment4.target=MyWorldOver()
+comment5.params=
+comment5.target=void\ prepare()
+comment6.params=
+comment6.target=void\ act()
+numComments=7
