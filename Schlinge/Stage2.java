@@ -6,8 +6,7 @@ public class Stage2 extends World
     StartScreen start = new StartScreen();
     Score currentScore = new Score("Currentscore");
     Score highScore = new Score("Highscore");
-    GreenfootSound bgSound = new GreenfootSound("background.mp3"); // Ensure this file exists in the sounds folder
-
+    GreenfootSound bgSound = new GreenfootSound("background.mp3"); // Different background sound for Stage2
 
     // Constructor
     public Stage2()
@@ -33,6 +32,7 @@ public class Stage2 extends World
 
     // Act method
     public void act() {
+       
         // Check for game over condition
         if (isGameOver()) {
             Greenfoot.setWorld(new MyWorldOver());
@@ -41,13 +41,13 @@ public class Stage2 extends World
 
     // Method to check if the game is over
     private boolean isGameOver() {
-        return false; // Example condition: game over if score is 0 or less
+        return false; 
     }
 
     // Method to prepare the world
     private void prepare()
     {
-        GreenfootImage bg = new GreenfootImage("Stage2.png"); // Ensure this file exists in the images folder
+        GreenfootImage bg = new GreenfootImage("Stage2.png"); // Different background for Stage2
         bg.scale(getWidth(), getHeight()); // Scale the image to fit the world size
         setBackground(bg);
 

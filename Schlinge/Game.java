@@ -1,17 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 
-/**
- * 
- * 
- * Autoren: Florian Weder, Anujan Chandrawathanan, Jonathan Wiggli 
- * Version 1
- * 
- *
- */
-public class Game extends Actor{
-    
-    
+public class Game extends Actor {
     // Variable declarations
     private boolean kDown, aDown, sDown, dDown, fDown; // Booleans for individual key inputs
     private ArrayList<Bass> a = new ArrayList<Bass>(); // ArrayList for the "key" objects
@@ -27,58 +17,65 @@ public class Game extends Actor{
     /**
      * The method randomPos defines one of four random positions on the x-axis.
      */
-    public int randomPos(){
-        return (Greenfoot.getRandomNumber(4)*150+75);
+    public int randomPos() {
+        return (Greenfoot.getRandomNumber(4) * 150 + 75);
     }
-    
+
     /**
      * The method endGame shows the game over screen and stops the program.
      */
-    public void endGame(){
+    public void endGame() {
         MyWorldOver gameOverWorld = new MyWorldOver();
         Greenfoot.setWorld(gameOverWorld);
-        if (getWorld() instanceof MyWorld){
-                bgSound = ((MyWorld)getWorld()).getBgSound();
-               
-            }else{
-                bgSound = ((MyWorldOver)getWorld()).getBgSound();
-            }
-            
+        
+        // Stop the background music based on the current world
+        if (getWorld() instanceof MyWorld) {
+            bgSound = ((MyWorld) getWorld()).getBgSound();
+        } else if (getWorld() instanceof Stage2) {
+            bgSound = ((Stage2) getWorld()).getBgSound();
+        } else {
+            bgSound = ((MyWorldOver) getWorld()).getBgSound();
+        }
+        
         bgSound.stop();
     }
-    
+
     // A variable from 1-8 is randomly generated so that a different sound is played each time
-    public String randomSoundHit(){
-        return ((Greenfoot.getRandomNumber(8) + 1 ) + ".mp3");
+    public String randomSoundHit() {
+        return ((Greenfoot.getRandomNumber(8) + 1) + ".mp3");
     }
-    
-    
-    
+
     /**
      * The act method is executed at the start.
-     */    
-    public void act(){
-        
+     */
+    public void act() {
         Greenfoot.setSpeed(50);
-        
-        if (getWorld() instanceof MyWorld){
-            currentScore = ((MyWorld)getWorld()).getCurrentScore();
-            highScore = ((MyWorld)getWorld()).getHighScore(); 
-        }else{
-            currentScore = ((MyWorldOver)getWorld()).getCurrentScore();
-            highScore = ((MyWorldOver)getWorld()).getHighScore();
+
+        // Retrieve scores and sound based on the current world
+        if (getWorld() instanceof MyWorld) {
+            currentScore = ((MyWorld) getWorld()).getCurrentScore();
+            highScore = ((MyWorld) getWorld()).getHighScore();
+        } else if (getWorld() instanceof Stage2) {
+            currentScore = ((Stage2) getWorld()).getCurrentScore();
+            highScore = ((Stage2) getWorld()).getHighScore();
+        } else {
+            currentScore = ((MyWorldOver) getWorld()).getCurrentScore();
+            highScore = ((MyWorldOver) getWorld()).getHighScore();
         }
-        
-        if(currentScore.getScore() > highScore.getScore()){
+
+        // Update high score if necessary
+        if (currentScore.getScore() > highScore.getScore()) {
             highScore.setScore(currentScore.getScore());
         }
-        
-        if(z == 0){
+
+        // Spawn beats at intervals
+        if (z == 0) {
             int randomLane = lanes[Greenfoot.getRandomNumber(lanes.length)];
             a.add(new Bass());
             int aLast = a.size() - 1;
             getWorld().addObject(a.get(aLast), randomLane, 10);
 
+            // Assign key and image based on lane
             switch (randomLane) {
                 case 75:
                     a.get(aLast).Taste = "A";
@@ -102,43 +99,13 @@ public class Game extends Actor{
             z--;
         }
 
-        // If "a" is pressed and the last object in the ArrayList a does not have the key "a", endGame() is executed
-        if (a.size() > 0 && aDown != Greenfoot.isKeyDown("a")) {
-            aDown = !aDown;
-            if (Greenfoot.isKeyDown(a.get(0).Taste)) {
-            } else if (Greenfoot.isKeyDown("a")) {
-                endGame();
-            }
-        }
+        // Handle key presses and check for misses
+        handleKeyPress("a", aDown, 0);
+        handleKeyPress("s", sDown, 1);
+        handleKeyPress("d", dDown, 2);
+        handleKeyPress("f", fDown, 3);
 
-        // If "s" is pressed and the last object in the ArrayList a does not have the key "s", endGame() is executed
-        if (a.size() > 0 && sDown != Greenfoot.isKeyDown("s")) {
-            sDown = !sDown;
-            if (Greenfoot.isKeyDown(a.get(0).Taste)) {
-            } else if (Greenfoot.isKeyDown("s")) {
-                endGame();
-            }
-        }
-
-        // If "d" is pressed and the last object in the ArrayList a does not have the key "d", endGame() is executed
-        if (a.size() > 0 && dDown != Greenfoot.isKeyDown("d")) {
-            dDown = !dDown;
-            if (Greenfoot.isKeyDown(a.get(0).Taste)) {
-            } else if (Greenfoot.isKeyDown("d")) {
-                endGame();
-            }
-        }
-
-        // If "f" is pressed and the last object in the ArrayList a does not have the key "f", endGame() is executed
-        if (a.size() > 0 && fDown != Greenfoot.isKeyDown("f")) {
-            fDown = !fDown;
-            if (Greenfoot.isKeyDown(a.get(0).Taste)) {
-            } else if (Greenfoot.isKeyDown("f")) {
-                endGame();
-            }
-        }
-
-        // If the correct key is pressed, the last object is removed from the ArrayList a and from the world
+        // Check for correct key presses and remove notes if hit
         if (a.size() > 0 && kDown != Greenfoot.isKeyDown(a.get(0).Taste)) {
             kDown = !kDown;
             if (Greenfoot.isKeyDown(a.get(0).Taste) && Math.abs(a.get(0).getY() - hitZoneY) <= hitZoneTolerance) {
@@ -150,7 +117,19 @@ public class Game extends Actor{
             }
         }
     }
+
+    /**
+     * Helper method to handle key presses and check for misses.
+     */
+    private void handleKeyPress(String key, boolean keyDown, int index) {
+        if (a.size() > 0 && keyDown != Greenfoot.isKeyDown(key)) {
+            keyDown = !keyDown;
+            if (Greenfoot.isKeyDown(a.get(0).Taste)) {
+                // Correct key pressed
+            } else if (Greenfoot.isKeyDown(key)) {
+                // Wrong key pressed
+                endGame();
+            }
+        }
+    }
 }
-
-
-
