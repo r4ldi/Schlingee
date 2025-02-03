@@ -12,7 +12,7 @@ public class Game extends Actor {
     GreenfootSound bgSound;
     private int[] lanes = {75, 225, 375, 525}; // Positions for the lanes
     private final int hitZoneY = 350; // Y-coordinate for the hit zone
-    private final int hitZoneTolerance = 20; // Tolerance for hitting the note
+    private final int hitZoneTolerance = 50; // Increased tolerance for hitting the note
 
     /**
      * The method randomPos defines one of four random positions on the x-axis.
@@ -27,7 +27,7 @@ public class Game extends Actor {
     public void endGame() {
         MyWorldOver gameOverWorld = new MyWorldOver();
         Greenfoot.setWorld(gameOverWorld);
-        
+
         // Stop the background music based on the current world
         if (getWorld() instanceof MyWorld) {
             bgSound = ((MyWorld) getWorld()).getBgSound();
@@ -36,7 +36,7 @@ public class Game extends Actor {
         } else {
             bgSound = ((MyWorldOver) getWorld()).getBgSound();
         }
-        
+
         bgSound.stop();
     }
 
@@ -50,7 +50,6 @@ public class Game extends Actor {
      */
     public void act() {
         Greenfoot.setSpeed(50);
-
         // Retrieve scores and sound based on the current world
         if (getWorld() instanceof MyWorld) {
             currentScore = ((MyWorld) getWorld()).getCurrentScore();
@@ -62,36 +61,33 @@ public class Game extends Actor {
             currentScore = ((MyWorldOver) getWorld()).getCurrentScore();
             highScore = ((MyWorldOver) getWorld()).getHighScore();
         }
-
         // Update high score if necessary
         if (currentScore.getScore() > highScore.getScore()) {
             highScore.setScore(currentScore.getScore());
         }
-
         // Spawn beats at intervals
         if (z == 0) {
             int randomLane = lanes[Greenfoot.getRandomNumber(lanes.length)];
-            a.add(new Bass());
-            int aLast = a.size() - 1;
-            getWorld().addObject(a.get(aLast), randomLane, 10);
-
+            Bass newBass = new Bass();
+            a.add(newBass);
+            getWorld().addObject(newBass, randomLane, 10);
             // Assign key and image based on lane
             switch (randomLane) {
                 case 75:
-                    a.get(aLast).Taste = "A";
-                    a.get(aLast).setImage("Images/a_icon.png");
+                    newBass.Taste = "A";
+                    newBass.setImage("Images/a_icon.png");
                     break;
                 case 225:
-                    a.get(aLast).Taste = "S";
-                    a.get(aLast).setImage("Images/s_icon.png");
+                    newBass.Taste = "S";
+                    newBass.setImage("Images/s_icon.png");
                     break;
                 case 375:
-                    a.get(aLast).Taste = "D";
-                    a.get(aLast).setImage("Images/d_icon.png");
+                    newBass.Taste = "D";
+                    newBass.setImage("Images/d_icon.png");
                     break;
                 case 525:
-                    a.get(aLast).Taste = "F";
-                    a.get(aLast).setImage("Images/f_icon.png");
+                    newBass.Taste = "F";
+                    newBass.setImage("Images/f_icon.png");
                     break;
             }
             z = speed;
@@ -100,35 +96,37 @@ public class Game extends Actor {
         }
 
         // Handle key presses and check for misses
-        handleKeyPress("a", aDown, 0);
-        handleKeyPress("s", sDown, 1);
-        handleKeyPress("d", dDown, 2);
-        handleKeyPress("f", fDown, 3);
+        handleKeyPress("a", 75);  // Lane 1 (A)
+        handleKeyPress("s", 225); // Lane 2 (S)
+        handleKeyPress("d", 375); // Lane 3 (D)
+        handleKeyPress("f", 525); // Lane 4 (F)
 
-        // Check for correct key presses and remove notes if hit
-        if (a.size() > 0 && kDown != Greenfoot.isKeyDown(a.get(0).Taste)) {
-            kDown = !kDown;
-            if (Greenfoot.isKeyDown(a.get(0).Taste) && Math.abs(a.get(0).getY() - hitZoneY) <= hitZoneTolerance) {
-                getWorld().removeObject(a.get(0));
-                Greenfoot.playSound(randomSoundHit());
-                a.remove(0);
-                currentScore.setScore(currentScore.getScore() + 10);
-                currentScore.updateScore();
+        // Check for missed notes
+        for (int i = 0; i < a.size(); i++) {
+            Bass bass = a.get(i);
+            if (bass.getY() > hitZoneY + hitZoneTolerance) {
+                endGame(); // End the game if a note is missed
+                return;
             }
         }
     }
 
     /**
-     * Helper method to handle key presses and check for misses.
+     * Helper method to handle key presses and check for hits.
      */
-    private void handleKeyPress(String key, boolean keyDown, int index) {
-        if (a.size() > 0 && keyDown != Greenfoot.isKeyDown(key)) {
-            keyDown = !keyDown;
-            if (Greenfoot.isKeyDown(a.get(0).Taste)) {
-                // Correct key pressed
-            } else if (Greenfoot.isKeyDown(key)) {
-                // Wrong key pressed
-                endGame();
+    private void handleKeyPress(String key, int laneX) {
+        if (Greenfoot.isKeyDown(key)) {
+            for (int i = 0; i < a.size(); i++) {
+                Bass bass = a.get(i);
+                if (bass.getX() == laneX && Math.abs(bass.getY() - hitZoneY) <= hitZoneTolerance) {
+                    // Correct key pressed and note is within the hit zone
+                    getWorld().removeObject(bass);
+                    a.remove(i);
+                    Greenfoot.playSound(randomSoundHit());
+                    currentScore.setScore(currentScore.getScore() + 10);
+                    currentScore.updateScore();
+                    break; // Exit the loop after removing the note
+                }
             }
         }
     }
