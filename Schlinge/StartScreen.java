@@ -20,6 +20,11 @@ public class StartScreen extends Actor {
                 highScore = ((Stage2) getWorld()).getHighScore();
                 bgSound = ((Stage2) getWorld()).getBgSound();
             } 
+            else if (getWorld() instanceof Stage3) {
+                currentScore = ((Stage3) getWorld()).getCurrentScore();
+                highScore = ((Stage3) getWorld()).getHighScore();
+                bgSound = ((Stage3) getWorld()).getBgSound();
+            } 
             else {
                 // Handle MyWorldOver or other worlds if needed
                 currentScore = ((MyWorldOver) getWorld()).getCurrentScore();

@@ -1,15 +1,15 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public class MyWorld extends World
+public class Stage3 extends World
 {
     // Variables declaration
     StartScreen start = new StartScreen();
     Score currentScore = new Score("Currentscore");
     Score highScore = new Score("Highscore");
-    GreenfootSound bgSound = new GreenfootSound("background.mp3");
+    GreenfootSound bgSound = new GreenfootSound("background.mp3"); // Different background sound for Stage2
 
     // Constructor
-    public MyWorld()
+    public Stage3()
     {    
         super(600, 400, 1); 
         prepare();
@@ -32,11 +32,7 @@ public class MyWorld extends World
 
     // Act method
     public void act() {
-        // Check if the score reaches 500 to transition to Stage2
-        if (currentScore.getScore() >= 100) {
-            Greenfoot.setWorld(new Stage2());
-        }
-
+       
         // Check for game over condition
         if (isGameOver()) {
             Greenfoot.setWorld(new MyWorldOver());
@@ -45,13 +41,13 @@ public class MyWorld extends World
 
     // Method to check if the game is over
     private boolean isGameOver() {
-        return false;
+        return false; 
     }
 
     // Method to prepare the world
     private void prepare()
     {
-        GreenfootImage bg = new GreenfootImage("Stage1.png");
+        GreenfootImage bg = new GreenfootImage("Stage3.png"); // Different background for Stage2
         bg.scale(getWidth(), getHeight()); // Scale the image to fit the world size
         setBackground(bg);
 
