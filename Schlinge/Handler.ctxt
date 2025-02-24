@@ -1,9 +1,0 @@
-#BlueJ class context
-comment0.target=Handler
-comment1.params=file
-comment1.target=Handler(java.lang.String)
-comment2.params=newScore
-comment2.target=void\ write(int)
-comment3.params=
-comment3.target=int\ read()
-numComments=4
