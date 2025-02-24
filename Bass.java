@@ -20,8 +20,10 @@ public class Bass extends Actor
         else if (getWorld() instanceof Stage3) {
             speed = 4;  // Even higher speed for Stage3
         }
-        else {
+        else if (getWorld() instanceof Stage4){
             speed = 8;  // No movement for MyWorldOver (game over screen)
+        } else if (getWorld() instanceof Stage5) {
+            speed = 14;
         }
         
         this.setLocation(this.getX(), (this.getY() + speed));
