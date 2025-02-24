@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=Game
+comment1.params=
+comment1.target=int\ randomPos()
+comment1.text=\r\n\ The\ method\ randomPos\ defines\ one\ of\ four\ random\ positions\ on\ the\ x-axis.\r\n
+comment2.params=
+comment2.target=void\ endGame()
+comment2.text=\r\n\ The\ method\ endGame\ shows\ the\ game\ over\ screen\ and\ stops\ the\ program.\r\n
+comment3.params=
+comment3.target=void\ act()
+comment3.text=\r\n\ The\ act\ method\ is\ executed\ at\ the\ start.\r\n
+comment4.params=key\ keyDown\ index
+comment4.target=void\ handleKeyPress(java.lang.String,\ boolean,\ int)
+comment4.text=\r\n\ Helper\ method\ to\ handle\ key\ presses\ and\ check\ for\ misses.\r\n
+numComments=5
