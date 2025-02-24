@@ -25,11 +25,10 @@ public class StartScreen extends Actor {
                 highScore = ((Stage3) getWorld()).getHighScore();
                 bgSound = ((Stage3) getWorld()).getBgSound();
             } 
-            else {
-                // Handle MyWorldOver or other worlds if needed
-                currentScore = ((MyWorldOver) getWorld()).getCurrentScore();
-                highScore = ((MyWorldOver) getWorld()).getHighScore();
-                bgSound = ((MyWorldOver) getWorld()).getBgSound();
+            else if (getWorld() instanceof Stage4) {
+                currentScore = ((Stage4) getWorld()).getCurrentScore();
+                highScore = ((Stage4) getWorld()).getHighScore();
+                bgSound = ((Stage4) getWorld()).getBgSound();
             }
 
             // Reset scores and start the game
