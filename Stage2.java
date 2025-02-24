@@ -32,6 +32,9 @@ public class Stage2 extends World
 
     // Act method
     public void act() {
+        if (currentScore.getScore() >= 250) {
+            Greenfoot.setWorld(new Stage3());
+        }
        
         // Check for game over condition
         if (isGameOver()) {
