@@ -36,8 +36,6 @@ public class Bass extends Actor
             }
             else if (getWorld() instanceof Stage3) {
                 bgSound = ((Stage3)getWorld()).getBgSound();
-            } else if (getWorld() instanceof Stage4) {
-                bgSound = ((Stage4)getWorld()).getBgSound();
             }
             
             bgSound.stop();
