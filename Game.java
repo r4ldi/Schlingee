@@ -37,6 +37,8 @@ public class Game extends Actor {
             bgSound = ((Stage3) getWorld()).getBgSound();
         } else if (getWorld() instanceof Stage4) {
             bgSound = ((Stage4) getWorld()).getBgSound();
+        } else {
+            bgSound = ((MyWorldOver) getWorld()).getBgSound();
         }
         
         bgSound.stop();
@@ -66,10 +68,7 @@ public class Game extends Actor {
         } else if (getWorld() instanceof Stage4) {
             currentScore = ((Stage4) getWorld()).getCurrentScore();
             highScore = ((Stage4) getWorld()).getHighScore();
-        } else {
-            
         }
-        
 
         // Update high score if necessary
         if (currentScore.getScore() > highScore.getScore()) {
