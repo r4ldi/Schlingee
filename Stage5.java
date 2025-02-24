@@ -1,6 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public class Stage4 extends World
+public class Stage5 extends World
 {
     // Variables declaration
     StartScreen start = new StartScreen();
@@ -9,7 +9,7 @@ public class Stage4 extends World
     GreenfootSound bgSound = new GreenfootSound("background.mp3"); // Different background sound for Stage2
 
     // Constructor
-    public Stage4()
+    public Stage5()
     {    
         super(600, 400, 1); 
         prepare();
@@ -32,9 +32,6 @@ public class Stage4 extends World
 
     // Act method
     public void act() {
-        if (currentScore.getScore() >= 500) {
-            Greenfoot.setWorld(new Stage5());
-        }
        
         // Check for game over condition
         if (isGameOver()) {

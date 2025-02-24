@@ -22,5 +22,10 @@ public class SelectStage extends World {
         
         Level4 level4 = new Level4();
         addObject(level4, getWidth() / 2, getHeight() / 2 - 0);
+        
+        Level5 level5 = new Level5();
+        addObject(level5, getWidth() / 2, getHeight() / 2 - -25);
+        
+        
     }
 }
