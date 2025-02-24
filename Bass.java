@@ -20,9 +20,6 @@ public class Bass extends Actor
         else if (getWorld() instanceof Stage3) {
             speed = 4;  // Even higher speed for Stage3
         }
-        else {
-            speed = 0;  // No movement for MyWorldOver (game over screen)
-        }
         
         this.setLocation(this.getX(), (this.getY() + speed));
         
@@ -35,8 +32,8 @@ public class Bass extends Actor
                 bgSound = ((Stage2)getWorld()).getBgSound();
             }
             else if (getWorld() instanceof Stage3) {
-                bgSound = ((Stage3)getWorld()).getBgSound();
-            }
+                bgSound = ((Stage3)getWorld()).getBgSound();}
+
             
             bgSound.stop();
             
